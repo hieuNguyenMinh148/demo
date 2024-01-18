@@ -45,8 +45,8 @@ export const findProductsById = (requestData) => async (dispatch) => {
 export const createProduct = (product) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_PRODUCT_REQUEST })
-
-    const { data } = await api.post(`${API_BASE_URL}api/admin/products`, product.data)
+    const { data } =  api.post(`api/admin/products/`, product)
+    console.log("created product", data)
     dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: CREATE_PRODUCT_FAILURE, payload: error.message })
@@ -54,10 +54,11 @@ export const createProduct = (product) => async (dispatch) => {
 }
 
 export const deleteProduct = (productId) => async (dispatch) => {
+  console.log(productId)
+
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST })
-
-    const { data } = await api.delete(`${API_BASE_URL}api/admin/products/${productId}/delete`)
+    const { data } = await api.delete(`api/admin/products/${productId}/delete`)
     console.log('delete product' + data)
     dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: productId })
   } catch (error) {

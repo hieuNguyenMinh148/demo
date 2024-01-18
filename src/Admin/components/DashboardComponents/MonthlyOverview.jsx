@@ -38,7 +38,7 @@ const MonthlyOverview = () => {
     <Card>
       <CardHeader title="Monthly Overview"
                   action={
-                    <IconButton>
+                    <IconButton size="small">
                       <MoreVertIcon/>
                     </IconButton>
                   }
@@ -59,7 +59,7 @@ const MonthlyOverview = () => {
                   }}
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
-        <Grid container spacing={[5,0]}>
+        <Grid container spacing={[5, 0]}>
           {renderStats()}
         </Grid>
       </CardContent>

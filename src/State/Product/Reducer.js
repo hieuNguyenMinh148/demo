@@ -1,4 +1,5 @@
 import {
+  DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   FIND_PRODUCT_BY_ID_FAILURE,
   FIND_PRODUCT_BY_ID_REQUEST,
@@ -30,7 +31,7 @@ export const customerProductReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        products: state.products.filter((item) => item.id !== action.payload)
+        deletedProduct: action.payload
       }
 
     case FIND_PRODUCTS_FAILURE:

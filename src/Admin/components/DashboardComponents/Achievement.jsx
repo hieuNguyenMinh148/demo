@@ -18,7 +18,7 @@ const TrophyImg = styled('img')({
 const Achievement = () => {
   return (
     <div>
-      <Card clasName="space-y-5" sx={{ position: 'relative', bgcolor: '#6c7a89',color:"white" }}>
+      <Card clasName="space-y-5" sx={{ position: 'relative'}}>
         <CardContent>
           <Typography variant="h6" sx={{ letterSpacing: '.25px' }}>
             Shop With Hieu
