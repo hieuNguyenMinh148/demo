@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 const AddressCard = ({ address }) => {
-  console.log(address)
+
   return (
     <div>
       <div className="space-y-3">
