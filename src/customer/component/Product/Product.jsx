@@ -6,7 +6,7 @@ import { mens_kurta } from '../../../Data/Men/men_kurta'
 import ProductCard from './ProductCard'
 import { filters, singleFilter } from './FilterData'
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams  } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { findProducts } from '../../../State/Product/Action'
 import Pagination from '@mui/material/Pagination'
@@ -22,6 +22,7 @@ function classNames (...classes) {
 
 export default function Product () {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -77,6 +78,16 @@ export default function Product () {
     navigate({ search: `?${query}` })
   }
 
+  const handleDisclosureClose = () => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.delete('price');
+
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+    });
+  };
+
   useEffect(() => {
     const [minPrice, maxPrice] = priceValue === null ? [0, 10000] : priceValue.split('-').map(Number)
 
@@ -89,11 +100,13 @@ export default function Product () {
       minDiscount: discount || 0,
       sort: sortValue || 'price_low',
       pageNumber: pageNumber - 1,
-      pageSize: 1,
+      pageSize: 8,
       stock: stock
     }
     dispatch(findProducts(data))
-  }, [param.levelThree, colorValue, sizeValue, priceValue, discount, sortValue, pageNumber, stock])
+    const pageParam = parseInt(searchParams.get('page'), 10) || 1
+    setCurrentPage(pageParam)
+  }, [param.levelThree, colorValue, sizeValue, priceValue, discount, sortValue, pageNumber, stock, location])
 
   return (
     <div className="bg-white">
@@ -324,7 +337,7 @@ export default function Product () {
                   </Disclosure>
                 ))}
                 {singleFilter.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
+                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6" >
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
@@ -383,7 +396,8 @@ export default function Product () {
 
           <section className="w-full px-[3.6rem]">
             <div className="px-4 py-5 flex justify-center">
-              <Pagination count={products.products?.totalPages} color="secondary" onChange={handlePaginationChange}/>
+              <Pagination count={products.products?.totalPages} color="secondary" page={currentPage}
+                          onChange={handlePaginationChange}/>
             </div>
           </section>
         </main>

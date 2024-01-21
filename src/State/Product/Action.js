@@ -13,12 +13,13 @@ import {
   FIND_PRODUCTS_SUCCESS
 } from './ActionType'
 import { api, API_BASE_URL } from '../../config/ApiConfig'
+import axios from 'axios'
 
 export const findProducts = (requestData) => async (dispatch) => {
   dispatch({ type: FIND_PRODUCTS_REQUEST })
   const { colors, sizes, minPrice, maxPrice, minDiscount, category, stock, sort, pageNumber, pageSize } = requestData
   try {
-    const { data } = await api.get(`api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}
+    const { data } = await axios.get(`${API_BASE_URL}/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}
         &minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
 
     console.log('product data', data)
@@ -33,7 +34,7 @@ export const findProductsById = (requestData) => async (dispatch) => {
   const { productId } = requestData
   console.log('----', productId)
   try {
-    const { data } = await api.get(`api/products/id/${productId}`)
+    const { data } = await axios.get(`${API_BASE_URL}/api/products/id/${productId}`)
     console.log(data)
 
     dispatch({ type: FIND_PRODUCT_BY_ID_SUCCESS, payload: data })

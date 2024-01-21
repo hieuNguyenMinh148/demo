@@ -172,39 +172,62 @@ export default function Navigation() {
                                 </Tab.Group>
 
                                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                                    {navigation.pages.map((page) => (
-                                        <div key={page.name} className="flow-root">
-                                            <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
-                                                {page.name}
-                                            </a>
-                                        </div>
-                                    ))}
+                                {/*    {navigation.pages.map((page) => (*/}
+                                {/*        <div key={page.name} className="flow-root">*/}
+                                {/*            <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">*/}
+                                {/*                {page.name}*/}
+                                {/*            </a>*/}
+                                {/*        </div>*/}
+                                {/*    ))}*/}
+                                {/*</div>*/}
+
+                                {/*<div className="space-y-6 border-t border-gray-200 px-4 py-6">*/}
+                                {/*    <div className="flow-root">*/}
+                                {/*        <a href="#" className="-m-2 block p-2 font-medium text-gray-900">*/}
+                                {/*            Sign in*/}
+                                {/*        </a>*/}
+                                {/*    </div>*/}
+                                {/*    <div className="flow-root">*/}
+                                {/*        <a href="#" className="-m-2 block p-2 font-medium text-gray-900">*/}
+                                {/*            Create account*/}
+                                {/*        </a>*/}
+                                {/*    </div>*/}
+                                    {auth.user?.firstName ? (
+                                      <div>
+                                          <Avatar className="text-white" onClick={handleUserClick}
+                                                  aria-controls={open ? "basic-menu" : undefined}
+                                                  aria-haspopup="true"
+                                                  aria-expanded={open ? "true" : undefined}
+                                                  sx={{
+                                                      width: "2.5rem",
+                                                      height: "2.5rem",
+                                                      bgcolor: "purple"
+                                                  }}>{auth.user?.firstName[0].toUpperCase()}</Avatar>
+
+                                          <Menu
+                                            id="basic-menu"
+                                            anchorEl={anchorEl}
+                                            open={openUserMenu}
+                                            onClose={handleCloseUserMenu}
+                                            MenuListProps={{
+                                                'aria-labelledby': 'basic-button',
+                                            }}
+                                          >
+                                              <MenuItem>Profile</MenuItem>
+                                              <MenuItem onClick={() => navigate("/account/order")}>My
+                                                  account</MenuItem>
+                                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                          </Menu>
+                                      </div>
+                                    ) : (
+                                      <Button onClick={handleOpen}
+                                              className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                          Sign in
+                                      </Button>
+
+                                    )}
                                 </div>
 
-                                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                                    <div className="flow-root">
-                                        <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                                            Sign in
-                                        </a>
-                                    </div>
-                                    <div className="flow-root">
-                                        <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                                            Create account
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div className="border-t border-gray-200 px-4 py-6">
-                                    <a href="#" className="-m-2 flex items-center p-2">
-                                        <img
-                                            src="https://tailwindui.com/img/flags/flag-canada.svg"
-                                            alt=""
-                                            className="block h-auto w-5 flex-shrink-0"
-                                        />
-                                        <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                                        <span className="sr-only">, change currency</span>
-                                    </a>
-                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
@@ -401,7 +424,7 @@ export default function Navigation() {
 
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <a href="#" className="group -m-2 flex items-center p-2">
+                                    <a href="/cart" className="group -m-2 flex items-center p-2">
                                         <ShoppingBagIcon
                                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true"
